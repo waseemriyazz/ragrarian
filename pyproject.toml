@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "ragrarian"
+version = "0.1.0"
+description = ""
+authors = ["waseemriyazz <waseemriyaz717@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.1"
+uvicorn = "^0.30.3"
+streamlit = "^1.37.0"
+requests = "^2.32.3"
+pypdf2 = "^3.0.1"
+langchain = "^0.2.11"
+sentence-transformers = "^3.0.1"
+numpy = "^1.21"
+faiss-cpu = "^1.8.0.post1"
+openai = "^1.37.1"
+python-multipart = "^0.0.9"
+langchain-community = "^0.2.10"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
