@@ -1,3 +1,5 @@
+import os
+import pickle
 from openai import OpenAI
 from Rag_app.config.config import OPENAI_API_BASE_URL, OPENAI_API_KEY, MODEL_NAME, EMBEDDING_MODEL
 from Rag_app.core.utils import get_vector_stores, SimpleDocument
@@ -8,6 +10,8 @@ class RAGModel:
     def __init__(self):
         self.client = OpenAI(base_url=OPENAI_API_BASE_URL, api_key=OPENAI_API_KEY)
         self.embedding_model = SentenceTransformer(EMBEDDING_MODEL)
+        self.data_dir = "data"  # Directory to store .pkl files
+        os.makedirs(self.data_dir, exist_ok=True)
 
     def handle_query(self, query):
         # Get all vector stores
@@ -77,3 +81,29 @@ class RAGModel:
         )
 
         return response.choices[0].message.content
+
+    def save_embeddings(self, file_name, embeddings):
+        file_path = os.path.join(self.data_dir, f"{file_name}.pkl")
+        with open(file_path, 'wb') as f:
+            pickle.dump(embeddings, f)
+
+    def load_embeddings(self, file_name):
+        file_path = os.path.join(self.data_dir, f"{file_name}.pkl")
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as f:
+                return pickle.load(f)
+        return None
+
+    def process_pdf(self, file_path):
+        # Example implementation for processing PDF
+        embeddings = self.embedding_model.encode(["Sample text from PDF"])  # Replace with actual text extraction logic
+        file_name = os.path.basename(file_path).split('.')[0]
+
+        # Check if embeddings already exist
+        existing_embeddings = self.load_embeddings(file_name)
+        if existing_embeddings is not None:
+            return existing_embeddings
+        
+        # Save new embeddings if not exist
+        self.save_embeddings(file_name, embeddings)
+        return embeddings

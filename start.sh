@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
 # Start FastAPI
-poetry run uvicorn main:app --host 0.0.0.0 --port 8000 &
+uvicorn Rag_app.main:app --host 0.0.0.0 --port 8000 &
 
 # Start Streamlit
-poetry run streamlit run frontend/streamlit.py
+streamlit run Rag_app/frontend/streamlit.py

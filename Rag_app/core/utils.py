@@ -75,7 +75,7 @@ def handle_query(query):
     top_results = results[:k]
     context = "\n\n".join([f"Relevance: {doc.metadata['score']:.4f}\nContent: {doc.page_content}" for doc in top_results])
     client = OpenAI(
-        base_url="http://184.72.115.138:8000/v1/vllm",
+        base_url="http://44.211.211.39:8000/v1/vllm",
         api_key="NOT A REAL KEY",
     )
     system_message = """You are a helpful AI assistant. Your task is to answer the user's query based on the provided context. 
@@ -97,7 +97,7 @@ def handle_query(query):
     return answer
 def rephrase_text(text, format_option):
     client = OpenAI(
-        base_url="http://184.72.115.138:8000/v1/vllm",
+        base_url="http://44.211.211.39:8000/v1/vllm",
         api_key="NOT A REAL KEY",
     )
     if format_option == 'Bullet Points':
