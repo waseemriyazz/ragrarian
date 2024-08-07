@@ -27,18 +27,18 @@ async def upload_pdf(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail="Error processing PDF file")
 
 @router.post("/query", response_model=Answer)
-async def query(query: Query):
+async def query(query: Query, temperature: float = 1.0):
     try:
-        answer = handle_query(query.text)
+        answer = handle_query(query.text, temperature=temperature)
         return Answer(text=answer)
     except Exception as e:
         logger.error(f"Error handling query: {e}")
         raise HTTPException(status_code=500, detail="Error handling query")
 
 @router.post("/rephrase", response_model=Answer)
-async def rephrase(request: RephraseRequest):
+async def rephrase(request: RephraseRequest, temperature: float = 1.0):
     try:
-        rephrased_text = rephrase_text(request.text, request.format_option)
+        rephrased_text = rephrase_text(request.text, request.format_option, temperature=temperature)
         return Answer(text=rephrased_text)
     except Exception as e:
         logger.error(f"Error rephrasing text: {e}")

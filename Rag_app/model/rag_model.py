@@ -13,7 +13,7 @@ class RAGModel:
         self.data_dir = "data"  # Directory to store .pkl files
         os.makedirs(self.data_dir, exist_ok=True)
 
-    def handle_query(self, query):
+    def handle_query(self, query, temperature=1.0):
         # Get all vector stores
         vector_stores = get_vector_stores()
         
@@ -53,12 +53,12 @@ class RAGModel:
                 {"role": "user", "content": f"Context:\n{context}\n\nQuery: {query}"}
             ],
             max_tokens=300,
-            temperature=0.7
+            temperature=temperature  # Use the temperature parameter
         )
         
         return response.choices[0].message.content
 
-    def rephrase_text(self, text, format_option):
+    def rephrase_text(self, text, format_option, temperature=1.0):
         if format_option == 'Bullet Points':
             rephrase_prompt = f"Rephrase the following text in bullet points:\n{text}"
         elif format_option == 'Paragraph':
@@ -77,7 +77,7 @@ class RAGModel:
                 {"role": "user", "content": rephrase_prompt}
             ],
             max_tokens=300,
-            temperature=0.7
+            temperature=temperature  # Use the temperature parameter
         )
 
         return response.choices[0].message.content

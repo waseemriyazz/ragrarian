@@ -12,9 +12,9 @@ from openai import OpenAI
 class SimpleDocument:
     def __init__(self, page_content, metadata=None):
         self.page_content = page_content
-        self.metadata = metadata if metadata else {}
+        self.metadata = metadata if metadata else {}  
 
-def process_pdf(pdf_path):
+def process_pdf(pdf_path):  
     start_time = time.time()
 
     with open(pdf_path, 'rb') as pdf_file:

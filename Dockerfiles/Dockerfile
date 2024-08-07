@@ -22,7 +22,6 @@ RUN poetry install --no-root --no-ansi
 # Copy the rest of the application code to the working directory
 COPY Rag_app /RAGRARIAN/Rag_app
 
-
 # Copy the start.sh script to the /RAGRARIAN directory
 COPY start.sh /RAGRARIAN/start.sh
 
@@ -38,5 +37,5 @@ EXPOSE 8501
 # Debug: List the contents of the /RAGRARIAN directory to ensure files are present
 RUN ls -la /RAGRARIAN
 
-# Set the entry point to our start script
+# We'll override this in docker-compose.yml for each service
 CMD ["/RAGRARIAN/start.sh"]
